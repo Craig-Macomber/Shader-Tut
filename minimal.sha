@@ -1,0 +1,66 @@
+//Cg
+
+
+
+/*
+This is in the style of Single-File Cg Shaders here:
+http://www.panda3d.org/manual/index.php/Shader_Basics
+
+This shader is not structly minimal, you can have less, but this is
+roughly minimum that auctually makes a thing on screen the right shape
+
+The comment at the top "//Cg" is used by panda to know the shader language,
+so its required.
+
+Many Cg examples use structs, but they are not needed, and not used.
+Don't be confused if you see code elsewhere using them though,
+they work pretty much like structs in C.
+
+Cg files consist of a set of stages, usally a vshader (vertex shader) and
+fshader (fragment shader) which are really seperate programs. One of each
+is included in each shader, as below. These stages appear as C style void functions with special names.
+Their inputs (called shaderInputs) come frame data setup by Panda,
+and their outputs are specially handled by the graphics card in various ways.
+
+Functions decalred in CG can have their paramaters preficed by in, out or inout (or nothing)
+to indicate if they are an input, output or both (default in). Output can also be done by return values.
+
+The stages as mentioned, are special functions, and have some special inputs and outputs.
+The names after the ":" are called semantics, and mean the value has special meaning. For example,
+POSITION in the vshader refferes to the vertex position on the input (in model space),
+on the output POSITION means the vertex position in API Clip Space.
+For info on these Coordinate Spaces see the panda manual:
+http://www.panda3d.org/manual/index.php/Shaders_and_Coordinate_Spaces
+
+Notice that the vertexes are float4, meaning 4 componet vectors, and the matrixes are also 4x4.
+This allows for perspective tranforms, see http://en.wikipedia.org/wiki/Transformation_matrix#Perspective_projection
+*/
+
+/*
+this is the vertex shader, and is run on every vertex.
+The vertexes come from the GeomVertexArrayData objects inside your geoms from panda
+it must output a POSITION in screen (API Clip) space, see notes above.
+*/
+void vshader(
+    in float4 vtx_position : POSITION, // get a value from a colume of the GeomVertexArrayData, in this case the Position
+    in uniform float4x4 mat_modelproj, // the standard projection matrix to get to screen space. The "uniform" means its the same for all the vertexes, aka, a geom property
+    out float4 l_position : POSITION)  // the output vertex position in API Clip Space
+{
+    l_position=mul(mat_modelproj,vtx_position); // do the translation to the proper coordnate space and output the position
+}
+
+/*
+this is the vertex shader, it runs on every pixel of every triangle rendered to screen.
+After the vshader gets the vertex locations in screen space, the graphics card uses the triangle list to
+and those positions to figure out what pixels to fun the fshader on.
+
+Data output by the vshader can be used by the fshader,
+and is interpolated between the vertexes that produced the triangle containing the pixel.
+This is not done in this simple example, but is used in almost all fsahders.
+
+*/
+void fshader(
+    out float3 o_color : COLOR) // The COLOR semantic means write it to the frame buffer
+{
+    o_color=float4(1,0,0,1); // write a color, in this case opaque red.
+}

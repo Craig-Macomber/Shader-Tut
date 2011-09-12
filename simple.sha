@@ -1,0 +1,47 @@
+//Cg
+
+// Stuff thats the same in minimal.sha is not commented here
+
+// this demos passing a value from vshader to fshader
+// in this case the position in model space.
+// outputs from vshaders seem to need to start with "l_"
+
+void vshader(
+    in float4 vtx_position : POSITION,
+    in uniform float4x4 mat_modelproj,
+    out float4 l_position : POSITION,
+    
+    // This is very odd, but important
+    // Cg seems to fail at matching outputs from one stage to inputs of another
+    // unless they have matching semantics (maybe the use of structs could help here)
+    // TEXCOORD0, TEXCOORD1 etc are valid, so I just use those. Suggestions on
+    // better approaches are welcome
+    //
+    // Anyway, we are going to outpit the position in model space so we can use it in the fshader
+    out float3 l_modelPosition : TEXCOORD0
+    
+    
+    )
+{
+    l_position=mul(mat_modelproj,vtx_position);
+    
+    //vtx_position is a float4 (xyzw)
+    // and modelPosition is flaot3, so we simply ignore w, and get xyz like this
+    // the .xxxyyza etc stuff is called swizzleing, details here:
+    // www.math.bas.bg/~nkirov/2008/NETB101/projects/Cg-HTMLs_and_Files-Referat-F40215/page4.html
+    l_modelPosition=vtx_position.xyz;
+}
+
+
+void fshader(
+    in float3 l_modelPosition : TEXCOORD0, // the matching input for out output from the shader
+    out float3 o_color : COLOR) // The COLOR semantic means write it to the frame buffer
+{
+    // get something interesting looking
+    // since colors go from 0-1, the frational part is the visiable dynamic range
+    // since the model is large, we scale down the positions so the variations
+    // are clear.
+    // screw with this line for fun and learning!
+    float3 fpos=frac(l_modelPosition*0.01);
+    o_color=float4(fpos,1); // write a the color.
+}
