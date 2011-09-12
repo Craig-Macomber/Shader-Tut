@@ -4,4 +4,6 @@ Docs included in main.py, look there
 
 Handy links:
 All the functions provided by CG: http://http.developer.nvidia.com/CgTutorial/cg_tutorial_appendix_e.html
+All panda3d shader inputs/output: http://www.panda3d.org/manual/index.php/List_of_Possible_Cg_Shader_Inputs
+
 The offical(?) CG tutorial: http://developer.nvidia.com/node/76 (I havent looked at it, maybe its good)

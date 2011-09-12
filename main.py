@@ -69,7 +69,20 @@ shade("minimal")
 # makes a plad panda or sorts.
 shade("simple")
 
-# more comming soon
+# read inputs.sha for info!
+# makes a panda change color over time
+# by using a shader input
+inputExample=shade("inputs")
+time=[0]
+def setInput(task):
+    time[0]+= globalClock.getDt()
+    t=time[0]
+    # set the input to some time variable color to show it varying over time
+    inputExample.setShaderInput("inputExample",t%1,t/2.3%1,t/3.7%1,1)
+    return task.cont
+taskMgr.add(setInput,"inputUpdate")
+
+
 
 # demo for my shader geneator comming soon! for now,
 # see shadergeneator/test.py

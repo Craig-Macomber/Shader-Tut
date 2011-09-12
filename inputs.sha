@@ -1,0 +1,19 @@
+//Cg
+
+void vshader(
+    in float4 vtx_position : POSITION,
+    in uniform float4x4 mat_modelproj,
+    out float4 l_position : POSITION)
+{
+    l_position=mul(mat_modelproj,vtx_position);
+}
+
+
+void fshader(
+    // use a custom shader input via k_ prefix, see
+    // http://www.panda3d.org/manual/index.php/List_of_Possible_Cg_Shader_Inputs
+    uniform float4 in k_inputExample,
+    out float3 o_color : COLOR)
+{
+    o_color=k_inputExample;
+}
