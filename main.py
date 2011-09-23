@@ -93,10 +93,11 @@ import shadergenerator.manager
 # setup a shaderManager, see shadergenerator/manager.py
 # this is just a simple wrapper around the more complex inner workings
 # the paramaters are a list of library directories, and a script the defines the shader generator
-shaderManager=shadergenerator.manager.getManager(["shadergenerator/library"],"shadergenerator/graph/basic.gen")
+# and an optional path for any output debug files
+shaderManager=shadergenerator.manager.getManager(["shadergenerator/library"],"shadergenerator/graph/basic.gen",debugPath="shadergenerator/ShadersOut/")
 # and use the manager to generate a shader
-# first paramater is the node to process, and second is an optional debug path to dump the shader soure to.
-shaderManager.genShaders(getNode(True),"shadergenerator/ShadersOut/debug")
+# first paramater is the node to process, and second is an optional debug file to dump the shader soure to.
+shaderManager.genShaders(getNode(True),"debug")
 
 
 ## 2 - A Red Panda without getManager
@@ -148,7 +149,7 @@ node.setShader(shader)
 ## 5 - A Textured Panda, demo of a more compelex shader generator
 # this time using the tex.gen script, read the script for info
 shaderManager=shadergenerator.manager.getManager(["shadergenerator/library"],"shadergenerator/graph/tex.gen")
-shaderManager.genShaders(getNode(True),"shadergenerator/ShadersOut/debugTex")
+shaderManager.genShaders(getNode(True))
 
 ## 6 - A Lit Panda, demo of a more compelex shader generator
 # this time using the lit.gen script, read the script for info
@@ -164,6 +165,6 @@ node.setShaderInput('dlight',dlnp)
 dayCycle=dlnp.hprInterval(10.0,Point3(0,360,0))
 dayCycle.loop()
 node.setShaderInput('fogDensity',.0001)
-shaderManager.genShaders(node,"shadergenerator/ShadersOut/debugLit")
+shaderManager.genShaders(node)
 
 run()
