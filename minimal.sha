@@ -22,7 +22,7 @@ is included in each shader, as below. These stages appear as C style void functi
 Their inputs (called shaderInputs) come frame data setup by Panda,
 and their outputs are specially handled by the graphics card in various ways.
 
-Functions decalred in CG can have their paramaters preficed by in, out or inout (or nothing)
+Functions decalred in CG can have their paramaters prefixed by in, out or inout (or nothing)
 to indicate if they are an input, output or both (default in). Output can also be done by return values.
 
 The stages as mentioned, are special functions, and have some special inputs and outputs.
@@ -47,7 +47,7 @@ The vertexes come from the GeomVertexArrayData objects inside your geoms from pa
 it must output a POSITION in screen (API Clip) space, see notes above.
 */
 void vshader(
-    // get a value from a colume of the GeomVertexArrayData, in this case the Position
+    // get a value from a column of the GeomVertexArrayData, in this case the Position
     // the semantic here may not be needed, but it seems to be tradational and might effect the performance a bit.
     // what really matters is the name, vtx_position, which matches an entry in shader inputs table linked above.
     in float4 vtx_position : POSITION,
@@ -60,7 +60,7 @@ void vshader(
 }
 
 /*
-this is the vertex shader, it runs on every pixel of every triangle rendered to screen.
+this is the fragment shader, it runs on every pixel of every triangle rendered to screen.
 After the vshader gets the vertex locations in screen space, the graphics card uses the triangle list to
 and those positions to figure out what pixels to fun the fshader on.
 
