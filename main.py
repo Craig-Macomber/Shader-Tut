@@ -44,7 +44,7 @@ def getNode(copy=False):
     return node
 
 # these three don't use shaders, just examples of out setup here
-plane=getNode()
+plain=getNode()
 red=getNode()
 red.setColor(1,0,0,0)
 blue=getNode()
