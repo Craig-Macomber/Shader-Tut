@@ -6,7 +6,7 @@
 This is in the style of Single-File Cg Shaders here:
 http://www.panda3d.org/manual/index.php/Shader_Basics
 
-This shader is not structly minimal, you can have less, but this is
+This shader is not strictly minimal, you can have less, but this is
 roughly minimum that auctually makes a thing on screen the right shape
 
 The comment at the top "//Cg" is used by panda to know the shader language,
@@ -62,7 +62,7 @@ void vshader(
 /*
 this is the fragment shader, it runs on every pixel of every triangle rendered to screen.
 After the vshader gets the vertex locations in screen space, the graphics card uses the triangle list to
-and those positions to figure out what pixels to fun the fshader on.
+and those positions to figure out what pixels to run the fshader on.
 
 Data output by the vshader can be used by the fshader,
 and is interpolated between the vertexes that produced the triangle containing the pixel.
